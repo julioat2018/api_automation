@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import AutomationTarget
+from .models import User
 
 
 # Register your models here.
-admin.site.register(AutomationTarget)
+admin.site.register(User)

@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from .models import AutomationTarget
+from .models import User
 
 
-class AutomationTargetSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = AutomationTarget
+        model = User
         fields = ['name']
