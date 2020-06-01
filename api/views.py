@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from selenium import webdriver
 
+import time
 
-# Create your views here.
+
 def index(request):
     return HttpResponse("Hello, world. You're at the api index.")
 
@@ -18,7 +19,6 @@ def auto_submit(request):
     phone = request.POST.get('phone')
     site_id = request.POST.get('site_id')
 
-    url = 'https://energia.tariffe-speciali.it/fv_optima_settembre2018/'
     options = webdriver.ChromeOptions()
     # options.add_argument('--headless')
     br = webdriver.Chrome(options=options, executable_path=settings.DIR_PATH + 'browser/chromedriver')
@@ -30,6 +30,10 @@ def auto_submit(request):
 
     if site_id == 'energia':
         print("energia")
+        url = 'https://energia.tariffe-speciali.it/fv_optima_settembre2018/'
+        br.get(url)
+        time.sleep(1)
+
         br.find_element_by_xpath('//*[@id="nome"]').send_keys(name)
         br.find_element_by_xpath('//*[@id="cognome"]').send_keys(surname)
         br.find_element_by_xpath('//*[@id="telefono"]').send_keys(phone)
@@ -37,6 +41,14 @@ def auto_submit(request):
         pass
     elif site_id == 'telefonia':
         print("telefonia")
+        url = 'https://telefonia.tariffe-speciali.it/diamond_fibra/conferma.php'
+        br.get(url)
+        time.sleep(1)
+
+        br.find_element_by_xpath('//*[@id="nome"]').send_keys(name)
+        br.find_element_by_xpath('//*[@id="cognome"]').send_keys(surname)
+        br.find_element_by_xpath('//*[@id="telefono"]').send_keys(phone)
+        br.find_element_by_xpath('//*[@id="form-cliente"]/div/div[5]/div/input').click()
         pass
 
     return HttpResponse("Hello, world. You're at the api auto_submit.")
