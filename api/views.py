@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
 
+# from selenium import webdriver
 from seleniumwire import webdriver
 
 import time
@@ -27,16 +28,17 @@ def auto_submit(request):
         print("port ==============> ", port)
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
-        # proxy = '163.172.70.236:' + str(port)
+        proxy = '163.172.70.236:' + str(port)
         # options.add_argument('--proxy-server=socks5://' + proxy)
+        # options.add_argument("--proxy-auto-detect")
 
-        options = {
+        seleniumwire_options = {
             'proxy': {
                 'http': '163.172.70.236:' + str(port),
                 'https': '163.172.70.236:' + str(port)
             }
         }
-        br = webdriver.Chrome(seleniumwire_options=options)
+        br = webdriver.Chrome(seleniumwire_options=seleniumwire_options, options=options)
 
         # br = webdriver.Chrome(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'chromedriver')
         br.set_page_load_timeout(40)
