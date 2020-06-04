@@ -31,7 +31,7 @@ def auto_submit(request):
         # options.add_argument('--headless')
         # proxy = '163.172.70.236:' + str(port)
         # options.add_argument('--proxy-server=socks5://' + proxy)
-        # options.add_argument("--no-sandbox")
+        options.add_argument("--no-sandbox")
         # options.add_argument("--proxy-auto-detect")
         br = webdriver.Chrome(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'chromedriver')
         br.set_page_load_timeout(40)
