@@ -42,6 +42,9 @@ def auto_submit(request):
 
         try:
             response = br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
+            br.get('https://www.expressvpn.com/what-is-my-ip')
+            ip_address = br.find_element_by_xpath('//p[@class="ip-address"]').text
+            print(ip_address)
             # response_status = response.status_code
             # print(response_status)
         except Exception as e:
