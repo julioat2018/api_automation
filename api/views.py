@@ -2,7 +2,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
-import requests
 import re
 
 # from selenium import webdriver
