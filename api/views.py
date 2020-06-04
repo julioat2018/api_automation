@@ -30,7 +30,7 @@ def auto_submit(request):
         options.add_argument('--headless')
         proxy = '163.172.70.236:' + str(port)
         options.add_argument('--proxy-server=socks5://' + proxy)
-        options.addArguments("--no-sandbox")
+        options.add_argument("--no-sandbox")
         # options.add_argument("--proxy-auto-detect")
 
         # seleniumwire_options = {
