@@ -33,16 +33,7 @@ def auto_submit(request):
         options.add_argument("--no-sandbox")
         # options.add_argument("--proxy-auto-detect")
 
-        # seleniumwire_options = {
-        #     'proxy': {
-        #         'http': '163.172.70.236:' + str(port),
-        #         'https': '163.172.70.236:' + str(port)
-        #     }
-        # }
-        # br = webdriver.Chrome(seleniumwire_options=seleniumwire_options, options=options)
-        br = webdriver.Chrome(options=options)
-
-        # br = webdriver.Chrome(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'chromedriver')
+        br = webdriver.Chrome(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'chromedriver')
         br.set_page_load_timeout(40)
 
         # options = webdriver.FirefoxOptions()
@@ -51,8 +42,8 @@ def auto_submit(request):
 
         try:
             response = br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
-            response_status = response.status_code
-            print(response_status)
+            # response_status = response.status_code
+            # print(response_status)
         except Exception as e:
             print(e)
             br.close()
