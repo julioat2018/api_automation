@@ -28,7 +28,7 @@ def auto_submit(request):
     for port in range(2301, 2311):
         print("port ==============> ", port)
         options = webdriver.ChromeOptions()
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         # proxy = '163.172.70.236:' + str(port)
         # options.add_argument('--proxy-server=socks5://' + proxy)
         options.add_argument("--no-sandbox")
