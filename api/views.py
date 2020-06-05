@@ -4,9 +4,9 @@ from django.views.decorators.http import require_http_methods
 from django.conf import settings
 import re
 
-# from selenium import webdriver
+from selenium import webdriver
 from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
-from seleniumwire import webdriver
+# from seleniumwire import webdriver
 
 import time
 
@@ -33,7 +33,6 @@ def auto_submit(request):
         proxy = '163.172.70.236:' + str(port)
         options.add_argument('--proxy-server=socks5://' + proxy)
         options.add_argument("--no-sandbox")
-        # options.add_argument("--proxy-auto-detect")
         br = webdriver.Chrome(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'chromedriver')
         br.maximize_window()
         br.set_page_load_timeout(100)
