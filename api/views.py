@@ -38,7 +38,7 @@ def auto_submit(request):
         br.set_page_load_timeout(40)
 
         options = webdriver.FirefoxOptions()
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         # proxy = '163.172.70.236:' + str(port)
         # options.add_argument('--proxy-server=socks5://' + proxy)
         # options.add_argument("--no-sandbox")
@@ -67,7 +67,8 @@ def auto_submit(request):
                 br.find_element_by_xpath('//*[@id="nome"]').send_keys(name)
                 br.find_element_by_xpath('//*[@id="cognome"]').send_keys(surname)
                 br.find_element_by_xpath('//*[@id="telefono"]').send_keys(phone)
-                br.find_element_by_xpath('//*[@id="form-cliente"]/div/div[5]/div/input').click()
+                # br.find_element_by_xpath('//*[@id="form-cliente"]/div/div[5]/div/input').click()
+                br.find_element_by_xpath('//input[@type="submit"]').click()
                 br.close()
                 time.sleep(10)
             elif site_id == 'telefonia':
