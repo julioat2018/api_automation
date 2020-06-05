@@ -44,17 +44,17 @@ def auto_submit(request):
         # options.add_argument("--no-sandbox")
         # br = webdriver.Firefox(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'geckodriver')
 
-        try:
-            br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
-            result = br.find_element_by_xpath("//body").text
-            if 'Requested from:' not in result:
-                br.close()
-                continue
-            print(result)
-        except Exception as e:
-            print(e)
-            br.close()
-            continue
+        # try:
+        #     br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
+        #     result = br.find_element_by_xpath("//body").text
+        #     if 'Requested from:' not in result:
+        #         br.close()
+        #         continue
+        #     print(result)
+        # except Exception as e:
+        #     print(e)
+        #     br.close()
+        #     continue
 
         is_run = True
         try:
@@ -66,7 +66,6 @@ def auto_submit(request):
                 br.find_element_by_xpath('//*[@id="cognome"]').send_keys(surname)
                 br.find_element_by_xpath('//*[@id="telefono"]').send_keys(phone)
                 time.sleep(5)
-                # br.find_element_by_xpath('//*[@id="form-cliente"]/div/div[5]/div/input').click()
                 br.find_element_by_xpath('//input[@type="submit"]').click()
                 br.close()
             elif site_id == 'telefonia':
