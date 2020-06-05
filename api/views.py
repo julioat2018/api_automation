@@ -29,7 +29,7 @@ def auto_submit(request):
     for port in range(2301, 2311):
         print("port ==============> ", port)
         options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
+        # options.add_argument('--headless')
         proxy = '163.172.70.236:' + str(port)
         options.add_argument('--proxy-server=socks5://' + proxy)
         options.add_argument("--no-sandbox")
@@ -47,10 +47,10 @@ def auto_submit(request):
 
         try:
             response = br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
-            time.sleep(30)
-            br.get('https://www.expressvpn.com/what-is-my-ip')
-            ip_address = br.find_element_by_xpath('//p[@class="ip-address"]').text
-            print(ip_address)
+            print(br.find_element_by_xpath("//body").text)
+            # br.get('https://www.expressvpn.com/what-is-my-ip')
+            # ip_address = br.find_element_by_xpath('//p[@class="ip-address"]').text
+            # print(ip_address)
             # response_status = response.status_code
             # print(response_status)
         except Exception as e:
