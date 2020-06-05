@@ -30,33 +30,33 @@ def auto_submit(request):
         print("port ==============> ", port)
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
-        # proxy = '163.172.70.236:' + str(port)
-        # options.add_argument('--proxy-server=socks5://' + proxy)
+        proxy = '163.172.70.236:' + str(port)
+        options.add_argument('--proxy-server=socks5://' + proxy)
         options.add_argument("--no-sandbox")
         # options.add_argument("--proxy-auto-detect")
         br = webdriver.Chrome(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'chromedriver')
         br.maximize_window()
         br.set_page_load_timeout(100)
 
-        options = webdriver.FirefoxOptions()
-        options.add_argument('--headless')
+        # options = webdriver.FirefoxOptions()
+        # options.add_argument('--headless')
         # proxy = '163.172.70.236:' + str(port)
         # options.add_argument('--proxy-server=socks5://' + proxy)
         # options.add_argument("--no-sandbox")
         # br = webdriver.Firefox(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'geckodriver')
 
-        # try:
-        #     response = br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
-        #     time.sleep(30)
-        #     br.get('https://www.expressvpn.com/what-is-my-ip')
-        #     ip_address = br.find_element_by_xpath('//p[@class="ip-address"]').text
-        #     print(ip_address)
-        #     # response_status = response.status_code
-        #     # print(response_status)
-        # except Exception as e:
-        #     print(e)
-        #     br.close()
-        #     continue
+        try:
+            response = br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
+            time.sleep(30)
+            br.get('https://www.expressvpn.com/what-is-my-ip')
+            ip_address = br.find_element_by_xpath('//p[@class="ip-address"]').text
+            print(ip_address)
+            # response_status = response.status_code
+            # print(response_status)
+        except Exception as e:
+            print(e)
+            br.close()
+            continue
 
         is_run = True
         try:
