@@ -45,13 +45,12 @@ def auto_submit(request):
         # br = webdriver.Firefox(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'geckodriver')
 
         try:
-            response = br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
-            print(br.find_element_by_xpath("//body").text)
-            # br.get('https://www.expressvpn.com/what-is-my-ip')
-            # ip_address = br.find_element_by_xpath('//p[@class="ip-address"]').text
-            # print(ip_address)
-            # response_status = response.status_code
-            # print(response_status)
+            br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
+            result = br.find_element_by_xpath("//body").text
+            if 'Requested from:' not in result:
+                br.close()
+                continue
+            print(result)
         except Exception as e:
             print(e)
             br.close()
