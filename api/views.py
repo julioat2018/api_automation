@@ -41,7 +41,7 @@ def auto_submit(request):
     site_id = request.POST.get('site_id', '')
 
     is_run = False
-
+    counter = 0
     for port in range(2301, 2311):
         print("port ==============> ", port)
         options = webdriver.ChromeOptions()
@@ -61,33 +61,34 @@ def auto_submit(request):
         # br = webdriver.Firefox(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'geckodriver')
 
         try:
-            # br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
-            # result = br.find_element_by_xpath("//body").text
-            # if 'Requested from:' not in result:
-            #     br.close()
-            #     continue
-            # print(result)
-
-            try:
-                r = requests.get("https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl",
-                                 proxies=dict(http="socks5://{}:{}".format('163.172.70.236', port),
-                                              https="socks5://{}:{}".format('163.172.70.236', port)))
-
-                if r.status_code == 200:
-                    proxy_ip = re.findall(re.compile("Requested from:.*"), r.text)[0]
-                    print(proxy_ip)
-                    if proxy_ip == '163.172.70.236':
-                        br.close()
-                        continue
-                else:
-                    br.close()
-                    continue
-            except requests.exceptions.ConnectionError as e:
+            br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
+            result = br.find_element_by_xpath("//body").text
+            if 'Requested from:' not in result:
+                counter += 1
                 br.close()
                 continue
 
+            # try:
+            #     r = requests.get("https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl",
+            #                      proxies=dict(http="socks5://{}:{}".format('163.172.70.236', port),
+            #                                   https="socks5://{}:{}".format('163.172.70.236', port)))
+            #
+            #     if r.status_code == 200:
+            #         proxy_ip = re.findall(re.compile("Requested from:.*"), r.text)[0]
+            #         print(proxy_ip)
+            #         if proxy_ip == '163.172.70.236':
+            #             br.close()
+            #             continue
+            #     else:
+            #         br.close()
+            #         continue
+            # except requests.exceptions.ConnectionError as e:
+            #     br.close()
+            #     continue
+
         except Exception as e:
             print(e)
+            counter += 1
             br.close()
             continue
 
@@ -125,9 +126,9 @@ def auto_submit(request):
 
         break
 
-    if is_run:
+    if counter == 0:
         return JsonResponse({'result': 'Success'})
-    else:
+    elif counter == 10:
         return JsonResponse({'result': 'Proxy error'})
-
-
+    else:
+        return JsonResponse({'result': 'Success with timeout'})
