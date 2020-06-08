@@ -9,10 +9,26 @@ from selenium.common.exceptions import TimeoutException, ElementClickIntercepted
 # from seleniumwire import webdriver
 
 import time
+import requests
 
 
 def index(request):
     return HttpResponse("Hello, world. You're at the api index.")
+
+
+def check_proxy(host, ports):
+    for i in range(ports[0],ports[1]):
+        try:
+            r = requests.get("https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl",
+                         proxies=dict(http="socks5://{}:{}".format(host,i),
+                                      https="socks5://{}:{}".format(host,i)))
+        except requests.exceptions.ConnectionError as e:
+            continue
+        if r.status_code == 200:
+            port = str(i)
+            proxy_ip= re.findall(re.compile("Requested from:.*"), r.text)[0]
+            return port, proxy_ip
+    return None, None
 
 
 @require_http_methods(["POST"])
@@ -44,17 +60,35 @@ def auto_submit(request):
         # options.add_argument("--no-sandbox")
         # br = webdriver.Firefox(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'geckodriver')
 
-        # try:
-        #     br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
-        #     result = br.find_element_by_xpath("//body").text
-        #     if 'Requested from:' not in result:
-        #         br.close()
-        #         continue
-        #     print(result)
-        # except Exception as e:
-        #     print(e)
-        #     br.close()
-        #     continue
+        try:
+            # br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
+            # result = br.find_element_by_xpath("//body").text
+            # if 'Requested from:' not in result:
+            #     br.close()
+            #     continue
+            # print(result)
+
+            try:
+                r = requests.get("https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl",
+                                 proxies=dict(http="socks5://{}:{}".format('163.172.70.236', port),
+                                              https="socks5://{}:{}".format('163.172.70.236', port)))
+
+                if r.status_code == 200:
+                    proxy_ip = re.findall(re.compile("Requested from:.*"), r.text)[0]
+                    if proxy_ip == '163.172.70.236':
+                        br.close()
+                        continue
+                else:
+                    br.close()
+                    continue
+            except requests.exceptions.ConnectionError as e:
+                br.close()
+                continue
+
+        except Exception as e:
+            print(e)
+            br.close()
+            continue
 
         is_run = True
         try:
