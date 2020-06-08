@@ -4,6 +4,7 @@ chardet==3.0.4
 Django==3.0.6
 django-phone-field==1.8.0
 idna==2.9
+PySocks==1.7.1
 pytz==2020.1
 requests==2.23.0
 selenium==3.141.0
