@@ -75,6 +75,7 @@ def auto_submit(request):
 
                 if r.status_code == 200:
                     proxy_ip = re.findall(re.compile("Requested from:.*"), r.text)[0]
+                    print(proxy_ip)
                     if proxy_ip == '163.172.70.236':
                         br.close()
                         continue
