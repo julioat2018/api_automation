@@ -63,32 +63,31 @@ def auto_submit(request):
         # br = webdriver.Firefox(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'geckodriver')
 
         try:
-            # br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
-            # result = br.find_element_by_xpath("//body").text
-            # if 'Requested from:' not in result:
-            #     counter += 1
-            #     br.close()
-            #     continue
+            br.get('https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl')
+            result = br.find_element_by_xpath("//body").text
+            if 'Requested from:' not in result:
+                counter += 1
+                br.close()
+                continue
 
-            # try:
-            #     r = requests.get("https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl",
-            #                      proxies=dict(http="socks5://{}:{}".format('163.172.70.236', port),
-            #                                   https="socks5://{}:{}".format('163.172.70.236', port)))
-            #
-            #     if r.status_code == 200:
-            #         proxy_ip = re.findall(re.compile("Requested from:.*"), r.text)[0]
-            #         print(proxy_ip)
-            #         if proxy_ip == '163.172.70.236':
-            #             br.close()
-            #             continue
-            #     else:
-            #         br.close()
-            #         continue
-            # except requests.exceptions.ConnectionError as e:
-            #     print(e)
-            #     br.close()
-            #     continue
-            pass
+            try:
+                r = requests.get("https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl",
+                                 proxies=dict(http="socks5://{}:{}".format('163.172.70.236', port),
+                                              https="socks5://{}:{}".format('163.172.70.236', port)))
+
+                if r.status_code == 200:
+                    proxy_ip = re.findall(re.compile("Requested from:.*"), r.text)[0]
+                    print(proxy_ip)
+                    if proxy_ip == '163.172.70.236':
+                        br.close()
+                        continue
+                else:
+                    br.close()
+                    continue
+            except requests.exceptions.ConnectionError as e:
+                print(e)
+                br.close()
+                continue
         except Exception as e:
             print(e)
             counter += 1
