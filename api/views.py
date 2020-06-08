@@ -50,6 +50,7 @@ def auto_submit(request):
         options.add_argument('--proxy-server=socks5://' + proxy)
         options.add_argument("--no-sandbox")
         options.add_argument("--start-maximized")
+        options.add_argument("--window-size=1920,1080")
         br = webdriver.Chrome(options=options, executable_path=settings.BASE_DIR + settings.DIR_PATH + 'chromedriver')
         # br.maximize_window()
         br.set_page_load_timeout(100)
@@ -69,24 +70,25 @@ def auto_submit(request):
             #     br.close()
             #     continue
 
-            try:
-                r = requests.get("https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl",
-                                 proxies=dict(http="socks5://{}:{}".format('163.172.70.236', port),
-                                              https="socks5://{}:{}".format('163.172.70.236', port)))
-
-                if r.status_code == 200:
-                    proxy_ip = re.findall(re.compile("Requested from:.*"), r.text)[0]
-                    print(proxy_ip)
-                    if proxy_ip == '163.172.70.236':
-                        br.close()
-                        continue
-                else:
-                    br.close()
-                    continue
-            except requests.exceptions.ConnectionError as e:
-                print(e)
-                br.close()
-                continue
+            # try:
+            #     r = requests.get("https://www.rainsbrook.co.uk/cgi-bin/proxytest.pl",
+            #                      proxies=dict(http="socks5://{}:{}".format('163.172.70.236', port),
+            #                                   https="socks5://{}:{}".format('163.172.70.236', port)))
+            #
+            #     if r.status_code == 200:
+            #         proxy_ip = re.findall(re.compile("Requested from:.*"), r.text)[0]
+            #         print(proxy_ip)
+            #         if proxy_ip == '163.172.70.236':
+            #             br.close()
+            #             continue
+            #     else:
+            #         br.close()
+            #         continue
+            # except requests.exceptions.ConnectionError as e:
+            #     print(e)
+            #     br.close()
+            #     continue
+            pass
         except Exception as e:
             print(e)
             counter += 1
